@@ -9,10 +9,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.awt.*;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-public class SetItemDisplayName implements CommandExecutor {
+public class AddItemLore implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -22,33 +23,42 @@ public class SetItemDisplayName implements CommandExecutor {
 
         Player p = (Player) sender;
 
-        if (!p.hasPermission("cti.name")) {
+        if (!p.hasPermission("cti.addlore")) {
             p.sendMessage(ChatColor.RED + "You do not have permission to run this command!");
             return true;
         }
 
         if (args.length < 1) {
-            p.sendMessage(ChatColor.RED + "Invalid arguments given! Please run /<command> <name of the item>");
+            p.sendMessage(ChatColor.RED + "Invalid arguments given! Please run /<command> <lore for this line>");
             return true;
         }
 
         ItemStack hand = p.getInventory().getItemInMainHand();
 
         if (!hand.hasItemMeta() || hand.getType() == Material.AIR) {
-            p.sendMessage(ChatColor.RED + "You cannot re-name an item without metadata!");
+            p.sendMessage(ChatColor.RED + "You cannot add lore to an item without metadata!");
             return true;
         }
 
         ItemMeta handMeta = hand.getItemMeta();
 
-        StringBuilder name = new StringBuilder();
+        StringBuilder lore = new StringBuilder();
 
-        Arrays.stream(args).forEach(arg -> name.append(ChatColor.translateAlternateColorCodes('&', arg)).append(" "));
+        Arrays.stream(args).forEach(arg -> lore.append(ChatColor.translateAlternateColorCodes('&', arg)).append(" "));
 
-        handMeta.setDisplayName(name.toString());
+        if (handMeta.getLore() != null && !handMeta.getLore().isEmpty()) {
+            List<String> existingLore = handMeta.getLore();
+            existingLore.add(lore.toString());
+            handMeta.setLore(existingLore);
+            hand.setItemMeta(handMeta);
+            p.sendMessage(ChatColor.GREEN + "You have successfully added lore to this item!");
+            return true;
+        }
+
+        handMeta.setLore(Collections.singletonList(lore.toString()));
         hand.setItemMeta(handMeta);
 
-        p.sendMessage(ChatColor.GREEN + "You have successfully renamed this item!");
+        p.sendMessage(ChatColor.GREEN + "You have successfully created lore for this item!");
 
         return true;
     }

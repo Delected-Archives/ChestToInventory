@@ -1,6 +1,5 @@
 package me.delected.chesttoinventory;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -8,15 +7,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class RightClickBlockEvent implements Listener {
@@ -38,7 +34,7 @@ public class RightClickBlockEvent implements Listener {
         }
 
         boolean wasCreated = false;
-
+        /* Create file */
         try {
             wasCreated = f.createNewFile();
         } catch (IOException ioException) {
@@ -53,9 +49,8 @@ public class RightClickBlockEvent implements Listener {
 
         ItemStack[] chestContents = chest.getInventory().getContents();
 
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-
+        /* Write to file */
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(f));) {
             writer.append(String.format("Inventory inv = Bukkit.createInventory(null, %o, %s);\n", chest.getInventory().getSize(), "\"" + name + "\""));
 
             for (int i = 0; i < chestContents.length; i++) {
@@ -93,8 +88,6 @@ public class RightClickBlockEvent implements Listener {
                 // add to inv
                 writer.append("inv.setItem(").append(String.valueOf(i)).append(", item").append(String.valueOf(i)).append(");\n");
             }
-
-            writer.close();
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
