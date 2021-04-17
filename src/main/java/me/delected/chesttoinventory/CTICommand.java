@@ -21,23 +21,23 @@ public class CTICommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length == 1) {
+        if (args.length == 0) {
             if (ChestToInventory.ctiPlayers.containsKey(p)) {
                 p.sendMessage(ChatColor.GREEN + "You have successfully exited CTI mode!");
                 ChestToInventory.ctiPlayers.remove(p);
                 return true;
             }
-            p.sendMessage(ChatColor.RED + "Invalid arguments given to enter CTI mode. Please provide 2 (/cti <name of inventory to create>)");
-        } else if (args.length == 2) {
+            p.sendMessage(ChatColor.RED + "Invalid arguments given to enter CTI mode. Please provide 1 (/cti <name of inventory to create>)");
+        } else if (args.length == 1) {
             if (!ChestToInventory.ctiPlayers.containsKey(p)) {
                 p.sendMessage(ChatColor.GREEN + "You have successfully entered CTI mode!");
-                ChestToInventory.ctiPlayers.put(p, args[1]);
+                ChestToInventory.ctiPlayers.put(p, args[0]);
                 return true;
             }
-            p.sendMessage(ChatColor.RED + "Invalid arguments given to exit CTI mode. Please provide 1 (/cti)");
+            p.sendMessage(ChatColor.RED + "Invalid arguments given to exit CTI mode. Please provide none (/cti)");
         }
 
-
+        p.sendMessage(ChatColor.RED + "Invalid arguments! Provide 1 to enter CTI mode, and none to exit!");
         return true;
     }
 }

@@ -35,8 +35,8 @@ public class RemoveItemLore implements CommandExecutor {
 
         ItemStack hand = p.getInventory().getItemInMainHand();
 
-        if (!hand.hasItemMeta() || hand.getType() == Material.AIR) {
-            p.sendMessage(ChatColor.RED + "You cannot add lore to an item without metadata!");
+        if (hand.getType() == Material.AIR) {
+            p.sendMessage(ChatColor.RED + "You cannot add remove lore from your fist!");
             return true;
         }
 

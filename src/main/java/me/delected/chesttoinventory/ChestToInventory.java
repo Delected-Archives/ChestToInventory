@@ -24,6 +24,7 @@ public final class ChestToInventory extends JavaPlugin {
         INSTANCE = this;
         saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new RightClickBlockEvent(), this);
+        getCommand("cti").setExecutor(new CTICommand());
         getCommand("setdisplayname").setExecutor(new SetItemDisplayName());
         getCommand("addlore").setExecutor(new AddItemLore());
         getCommand("removelore").setExecutor(new RemoveItemLore());

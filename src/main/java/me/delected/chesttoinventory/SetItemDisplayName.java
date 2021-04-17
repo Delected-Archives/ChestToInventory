@@ -34,8 +34,8 @@ public class SetItemDisplayName implements CommandExecutor {
 
         ItemStack hand = p.getInventory().getItemInMainHand();
 
-        if (!hand.hasItemMeta() || hand.getType() == Material.AIR) {
-            p.sendMessage(ChatColor.RED + "You cannot re-name an item without metadata!");
+        if (hand.getType() == Material.AIR) {
+            p.sendMessage(ChatColor.RED + "You cannot re-name your fist!");
             return true;
         }
 
@@ -43,7 +43,12 @@ public class SetItemDisplayName implements CommandExecutor {
 
         StringBuilder name = new StringBuilder();
 
-        Arrays.stream(args).forEach(arg -> name.append(ChatColor.translateAlternateColorCodes('&', arg)).append(" "));
+
+        for (int i = 0; i < args.length; i++) {
+            name.append(ChatColor.translateAlternateColorCodes('&', args[i]));
+            if (i == args.length - 1) continue;
+            name.append(" ");
+        }
 
         handMeta.setDisplayName(name.toString());
         hand.setItemMeta(handMeta);

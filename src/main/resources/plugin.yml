@@ -11,3 +11,12 @@ commands:
   cti:
     aliases: ["chesttoinv", "chesttoinventory"]
     description: converts a chest to a txt file which can be used in code to make inventories
+  setdisplayname:
+    aliases: ["rename", "itemname", "itemrename", "setname", "displayname"]
+    description: sets the displayname of the item in your main hand
+  addlore:
+    aliases: ["appendlore", "loreadd"]
+    description: adds lore to the item in your main hand
+  removelore:
+    aliases: ["deletelore", "loreremove"]
+    description: removes lore at a certain line from the item in your main hand

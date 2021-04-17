@@ -35,8 +35,8 @@ public class AddItemLore implements CommandExecutor {
 
         ItemStack hand = p.getInventory().getItemInMainHand();
 
-        if (!hand.hasItemMeta() || hand.getType() == Material.AIR) {
-            p.sendMessage(ChatColor.RED + "You cannot add lore to an item without metadata!");
+        if (hand.getType() == Material.AIR) {
+            p.sendMessage(ChatColor.RED + "You cannot add lore to your fist!");
             return true;
         }
 
@@ -44,8 +44,11 @@ public class AddItemLore implements CommandExecutor {
 
         StringBuilder lore = new StringBuilder();
 
-        Arrays.stream(args).forEach(arg -> lore.append(ChatColor.translateAlternateColorCodes('&', arg)).append(" "));
-
+        for (int i = 0; i < args.length; i++) {
+            lore.append(ChatColor.translateAlternateColorCodes('&', args[i]));
+            if (i == args.length - 1) continue;
+            lore.append(" ");
+        }
         if (handMeta.getLore() != null && !handMeta.getLore().isEmpty()) {
             List<String> existingLore = handMeta.getLore();
             existingLore.add(lore.toString());
