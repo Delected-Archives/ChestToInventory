@@ -1,0 +1,13 @@
+name: ChestToInventory
+version: ${project.version}
+main: me.delected.chesttoinventory.ChestToInventory
+api-version: 1.16
+prefix: CTI
+authors: [ Delected_ ]
+description: converts chests to actual inventories (utility)
+website: https://delected.me/
+
+commands:
+  cti:
+    aliases: ["chesttoinv", "chesttoinventory"]
+    description: converts a chest to a txt file which can be used in code to make inventories
